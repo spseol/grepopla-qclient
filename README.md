@@ -1,0 +1,4 @@
+grepopla-qclient
+================
+
+Strategic game
