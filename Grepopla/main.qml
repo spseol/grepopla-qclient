@@ -1,5 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
+import Ship 1.0
 
 ApplicationWindow {
     visible: true
@@ -7,22 +8,29 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
-    menuBar: MenuBar {
-        Menu {
-            title: qsTr("File")
-            MenuItem {
-                text: qsTr("&Open")
-                onTriggered: console.log("Open action triggered");
-            }
-            MenuItem {
-                text: qsTr("Exit")
-                onTriggered: Qt.quit();
-            }
+    Ship {
+        id: ship
+        x: 100
+        y: 100
+        width: 200
+        height: 200
+
+        imageSource: ""
+
+        Rectangle {
+            width: 200
+            height: 20
+            color: "red"
+            anchors.left: parent.left
+            anchors.bottom: parent.top
         }
     }
 
-    Text {
-        text: qsTr("Hello World")
-        anchors.centerIn: parent
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            ship.destination = Qt.point(mouse.x, mouse.y)
+            ship.rotation = ship.calculateRotation()
+        }
     }
 }
