@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets
+QT += qml quick widgets svg websockets
 
 SOURCES += main.cpp \
     components/objects/abstractitem.cpp \
