@@ -4,8 +4,10 @@ QT += qml quick widgets
 
 SOURCES += main.cpp \
     components/objects/abstractitem.cpp \
-    components/game/player/player.cpp \
-    components/objects/ship/ship.cpp
+    components/objects/ship/ship.cpp \
+    components/objects/planet/planet.cpp \
+    components/game/game.cpp \
+    components/game/player/player.cpp
 
 RESOURCES += qml.qrc
 
@@ -17,5 +19,7 @@ include(deployment.pri)
 
 HEADERS += \
     components/objects/abstractitem.h \
-    components/game/player/player.h \
-    components/objects/ship/ship.h
+    components/objects/ship/ship.h \
+    components/objects/planet/planet.h \
+    components/game/game.h \
+    components/game/player/player.h

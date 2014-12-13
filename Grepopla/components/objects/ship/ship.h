@@ -25,6 +25,10 @@ class Ship : public AbstractItem
     signals:
         void typeChanged(int arg);
 
+        void follow(int arg);
+        void isFollowed(int arg);
+        void isDisfollowed(int arg);
+
     public slots:
         void setType(int arg);
 };

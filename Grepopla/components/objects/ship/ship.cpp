@@ -10,6 +10,10 @@ void Ship::paint(QPainter *painter)
 
 }
 
+void Ship::follow(int arg)
+{
+
+}
 
 int Ship::type() const
 {
