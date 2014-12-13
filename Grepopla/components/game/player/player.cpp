@@ -19,6 +19,16 @@ QColor Player::color() const
     return m_color;
 }
 
+int Player::population() const
+{
+    return m_population;
+}
+
+int Player::maxPopulation() const
+{
+    return m_maxPopulation;
+}
+
 /*---------------------*/
 /*-------SETTERS-------*/
 /*---------------------*/
@@ -39,4 +49,22 @@ void Player::setColor(QColor arg)
 
     m_color = arg;
     emit colorChanged(arg);
+}
+
+void Player::setPopulation(int arg)
+{
+    if (m_population == arg)
+        return;
+
+    m_population = arg;
+    emit populationChanged(arg);
+}
+
+void Player::setMaxPopulation(int arg)
+{
+    if (m_maxPopulation == arg)
+        return;
+
+    m_maxPopulation = arg;
+    emit maxPopulationChanged(arg);
 }
