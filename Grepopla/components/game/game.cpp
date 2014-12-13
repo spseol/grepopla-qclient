@@ -5,6 +5,10 @@ Game::Game(QQuickItem *parent) :
 {
 }
 
+/*---------------------*/
+/*-------GETTERS-------*/
+/*---------------------*/
+
 int Game::planetCount() const
 {
     return m_planetCount;
@@ -14,6 +18,10 @@ int Game::playerCount() const
 {
     return m_playerCount;
 }
+
+/*---------------------*/
+/*-------SETTERS-------*/
+/*---------------------*/
 
 void Game::setPlanetCount(int arg)
 {
