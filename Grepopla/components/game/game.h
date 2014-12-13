@@ -2,29 +2,33 @@
 #define GAME_H
 
 #include <QQuickItem>
-//#include "player/player.h"
+#include "player/player.h"
 
 class Game : public QQuickItem
 {
     Q_OBJECT
 
     Q_PROPERTY(int planetCount READ planetCount WRITE setPlanetCount NOTIFY planetCountChanged)
+    Q_PROPERTY(int playerCount READ playerCount WRITE setPlayerCount NOTIFY playerCountChanged)
 
     int m_planetCount;
+    int m_playerCount;
 
-public:
+    public:
         explicit Game(QQuickItem *parent = 0);
 
-    int planetCount() const;
+        int planetCount() const;
+        int playerCount() const;
 
-signals:
-        //void gameOver(Player arg);
-
+    signals:
+        void restart();
+        void gameOver(Player *arg);
         void planetCountChanged(int arg);
+        void playerCountChanged(int arg);
 
-public slots:
-
-    void setPlanetCount(int arg);
+    public slots:
+        void setPlanetCount(int arg);
+        void setPlayerCount(int arg);
 };
 
 #endif // GAME_H
