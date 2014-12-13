@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>components/qml/game_components/Player.qml</file>
         <file>qml.qrc</file>
+        <file>resources/images/black_arrow.svg</file>
+        <file>components/qml/game_components/Ship.qml</file>
     </qresource>
 </RCC>

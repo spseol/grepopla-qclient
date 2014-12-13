@@ -1,6 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
-import Ship 1.0
+import "components/qml/game_components" as Components
 
 ApplicationWindow {
     visible: true
@@ -8,22 +8,12 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
-    Ship {
+    Components.Ship {
         id: ship
         x: 100
         y: 100
-        width: 200
-        height: 200
-
-        imageSource: ""
-
-        Rectangle {
-            width: 200
-            height: 20
-            color: "red"
-            anchors.left: parent.left
-            anchors.bottom: parent.top
-        }
+        width: 20
+        height: 20
     }
 
     MouseArea {
