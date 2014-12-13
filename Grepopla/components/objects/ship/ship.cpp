@@ -10,7 +10,7 @@ Ship::Ship(QQuickItem *parent) :
 void Ship::paint(QPainter *painter)
 {
     //relative do not work
-    QSvgRenderer renderer(QString("C:/Users/Sony/Documents/grepopla-qclient/Grepopla/resources/images/black_arrow.svg"));
+    QSvgRenderer renderer(m_imageSource.toString());
 
     renderer.render(painter);
 }
