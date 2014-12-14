@@ -3,18 +3,16 @@ import Ship 1.0
 
 Ship {
     id: ship
-    x: 100
-    y: 100
-    width: 20
-    height: 20
 
-    imageSource: "C:/Users/Sony/Documents/grepopla-qclient/Grepopla/resources/images/black_arrow.svg"
+    imageSource: "C:/Users/Sony/Documents/grepopla-qclient/Grepopla/resources/images/Symbol_Up_Arrow.svg"
+    rotationSpeed: 5
 
-    Rectangle {
-        width: 200
-        height: 20
-        color: "red"
-        anchors.left: parent.left
-        anchors.bottom: parent.top
+    onDestinationChanged: ParallelAnimation {
+        NumberAnimation { target: ship; property: "x"; to: destination.x; duration: ship.voyageDuration }
+        NumberAnimation { target: ship; property: "y"; to: destination.y; duration: ship.voyageDuration }
+    }
+
+    Behavior on rotation {
+        NumberAnimation { duration: ship.rotationDuration() }
     }
 }

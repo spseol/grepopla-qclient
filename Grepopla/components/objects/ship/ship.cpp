@@ -5,6 +5,9 @@
 Ship::Ship(QQuickItem *parent) :
     AbstractItem(parent)
 {
+    QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(setVoyageDuration(QPoint)));
+    QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(rotate()));
+    QObject::connect(this, SIGNAL(typeChanged(int)), this, SLOT(changeProperties(int)));
 }
 
 void Ship::paint(QPainter *painter)
@@ -15,16 +18,22 @@ void Ship::paint(QPainter *painter)
     renderer.render(painter);
 }
 
-qreal Ship::calculateRotation()
+void Ship::rotate()
 {
     qreal dx = m_destination.x();
     qreal dy = m_destination.y();
     qreal angle = qAtan2(dx - this->x(), this->y() - dy) / M_PI * 180.0;    //in degrees
+    delta_rotation = abs(this->property("rotation").toDouble() - angle);
 
     if(360 - abs(angle) > abs(angle))
-        return angle;
+        this->setProperty("rotation", angle);
     else
-        return 360 - abs(angle);
+        this->setProperty("rotation", 360 - abs(angle));
+}
+
+qreal Ship::rotationDuration() const
+{
+    return  delta_rotation * m_rotationSpeed;
 }
 
 /*---------------------*/
@@ -44,6 +53,16 @@ QPoint Ship::destination() const
 QUrl Ship::imageSource() const
 {
     return m_imageSource;
+}
+
+qreal Ship::rotationSpeed() const
+{
+    return m_rotationSpeed;
+}
+
+int Ship::voyageDuration() const
+{
+    return m_voyageDuration;
 }
 
 /*---------------------*/
@@ -76,3 +95,41 @@ void Ship::setImageSource(QUrl arg)
     m_imageSource = arg;
     emit imageSourceChanged(arg);
 }
+
+void Ship::setRotationSpeed(qreal arg)
+{
+    if (m_rotationSpeed == arg)
+        return;
+
+    m_rotationSpeed = arg;
+    emit rotationSpeedChanged(arg);
+}
+
+void Ship::setVoyageDuration(QPoint arg)
+{
+    qreal distance = sqrt(pow(arg.x() - this->x(), 2) + pow(arg.y() - this->y(), 2));
+    m_voyageDuration = distance * m_speed;
+    emit voyageDurationChanged(arg);
+}
+
+void Ship::changeProperties(int arg)
+{
+    switch (arg) {  //dokončit
+        case SmallShip:
+            this->setSpeed(9);
+            this->setRatio(0.2);
+            break;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
