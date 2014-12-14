@@ -1,8 +1,11 @@
 #include "abstractitem.h"
 
+int AbstractItem::IDLogger = 0;
+
 AbstractItem::AbstractItem(QQuickItem *parent) :
     QQuickPaintedItem(parent)
 {
+    m_ID = IDLogger++;
 }
 
 /*---------------------*/
@@ -23,6 +26,11 @@ QStringList AbstractItem::colors() const
 int AbstractItem::ID() const
 {
     return m_ID;
+}
+
+qreal AbstractItem::ratio() const
+{
+    return m_ratio;
 }
 
 /*---------------------*/
@@ -54,4 +62,13 @@ void AbstractItem::setID(int arg)
 
     m_ID = arg;
     emit IDChanged(arg);
+}
+
+void AbstractItem::setRatio(qreal arg)
+{
+    if (m_ratio == arg)
+        return;
+
+    m_ratio = arg;
+    emit ratioChanged(arg);
 }
