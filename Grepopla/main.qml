@@ -3,24 +3,23 @@ import QtQuick.Controls 1.2
 import "components/qml/game_components" as Components
 
 ApplicationWindow {
+    id: root
+
     visible: true
     width: 640
     height: 480
     title: qsTr("Hello World")
 
-    Components.Ship {
-        id: ship
-        x: 100
-        y: 100
-        width: 20
-        height: 20
+
+
+    Components.Player {
+        id: player
     }
 
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            ship.destination = Qt.point(mouse.x, mouse.y)
-            ship.rotation = ship.calculateRotation()
+            player.shipContainer[0].destination = Qt.point(mouse.x, mouse.y)
         }
     }
 }
