@@ -5,6 +5,8 @@
 Ship::Ship(QQuickItem *parent) :
     AbstractItem(parent)
 {
+    m_focus = false;
+
     QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(setVoyageDuration(QPoint)));
     QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(rotate()));
     QObject::connect(this, SIGNAL(typeChanged(int)), this, SLOT(changeProperties(int)));
@@ -80,10 +82,14 @@ void Ship::setType(int arg)
 
 void Ship::setDestination(QPoint arg)
 {
-    if (m_destination == arg)
+    if (m_destination == arg || !m_focus)
         return;
 
     m_destination = arg;
+
+    QObject *animation = this->findChild<QObject*>("moveAnimation");
+    QMetaObject::invokeMethod(animation, "stop");
+
     emit destinationChanged(arg);
 }
 
