@@ -72,3 +72,18 @@ void AbstractItem::setRatio(qreal arg)
     m_ratio = arg;
     emit ratioChanged(arg);
 }
+
+void AbstractItem::setFocus(bool arg)
+{
+    if (m_focus == arg)
+        return;
+
+    m_focus = arg;
+    emit focusChanged(arg);
+}
+
+
+bool AbstractItem::focus() const
+{
+    return m_focus;
+}
