@@ -6,7 +6,10 @@ Ship::Ship(QQuickItem *parent) :
     AbstractItem(parent)
 {
     m_focus = false;
+    m_following = false;
 
+    QObject::connect(this, SIGNAL(xChanged()), this, SLOT(emitDestination()));
+    QObject::connect(this, SIGNAL(yChanged()), this, SLOT(emitDestination()));
     QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(setVoyageDuration(QPoint)));
     QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(rotate()));
     QObject::connect(this, SIGNAL(typeChanged(int)), this, SLOT(changeProperties(int)));
@@ -31,6 +34,23 @@ void Ship::rotate()
         this->setProperty("rotation", angle);
     else
         this->setProperty("rotation", 360 - abs(angle));
+}
+
+void Ship::emitDestination()
+{
+    emit ppositionChanged(position().toPoint());
+}
+
+void Ship::startEmitDestination(Ship* follower)
+{
+    follower->setFollowing(true);
+    QObject::connect(this, SIGNAL(ppositionChanged(QPoint)), follower, SLOT(setDestination(QPoint)));
+}
+
+void Ship::stopEmitDestination(Ship *follower)
+{
+    follower->setFollowing(false);
+    QObject::disconnect(this, SIGNAL(ppositionChanged(QPoint)), follower, SLOT(setDestination(QPoint)));
 }
 
 qreal Ship::rotationDuration() const
@@ -67,6 +87,11 @@ int Ship::voyageDuration() const
     return m_voyageDuration;
 }
 
+bool Ship::following() const
+{
+    return m_following;
+}
+
 /*---------------------*/
 /*-------SETTERS-------*/
 /*---------------------*/
@@ -82,14 +107,15 @@ void Ship::setType(int arg)
 
 void Ship::setDestination(QPoint arg)
 {
-    if (m_destination == arg || !m_focus)
+    if (m_destination == arg || (!m_focus && !m_following))
         return;
 
     m_destination = arg;
 
-    QObject *animation = this->findChild<QObject*>("moveAnimation");
-    QMetaObject::invokeMethod(animation, "stop");
-
+    if(m_focus) {
+        QObject *animation = this->findChild<QObject*>("moveAnimation");
+        QMetaObject::invokeMethod(animation, "stop");
+    }
     emit destinationChanged(arg);
 }
 
@@ -109,6 +135,15 @@ void Ship::setRotationSpeed(qreal arg)
 
     m_rotationSpeed = arg;
     emit rotationSpeedChanged(arg);
+}
+
+void Ship::setFollowing(bool arg)
+{
+    if (m_following == arg)
+        return;
+
+    m_following = arg;
+    emit followingChanged(arg);
 }
 
 void Ship::setVoyageDuration(QPoint arg)

@@ -15,6 +15,7 @@ class Ship : public AbstractItem
     Q_PROPERTY(QUrl imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
     Q_PROPERTY(qreal rotationSpeed READ rotationSpeed WRITE setRotationSpeed NOTIFY rotationSpeedChanged)
     Q_PROPERTY(int voyageDuration READ voyageDuration NOTIFY voyageDurationChanged)
+    Q_PROPERTY(bool following READ following WRITE setFollowing NOTIFY followingChanged)
 
     private:
         int m_type;
@@ -23,6 +24,7 @@ class Ship : public AbstractItem
         qreal m_rotationSpeed;  //how much miliseconds does it take to rotate by 1°
         qreal delta_rotation;
         int m_voyageDuration;
+        bool m_following;
 
     public:
         explicit Ship(QQuickItem *parent = 0);
@@ -31,7 +33,9 @@ class Ship : public AbstractItem
 
         virtual void paint(QPainter *painter);
 
-        Q_INVOKABLE qreal rotationDuration() const;
+        Q_INVOKABLE qreal rotationDuration() const; //calculate duration of specific angle
+        Q_INVOKABLE void startEmitDestination(Ship* follower);  //follow
+        Q_INVOKABLE void stopEmitDestination(Ship* follower);   //stop follow
 
         int type() const;
         QPoint destination() const;
@@ -39,27 +43,31 @@ class Ship : public AbstractItem
         qreal rotationSpeed() const;
         int voyageDuration() const;
 
-    signals:
-        void follow(int arg);
-        void isFollowed(int arg);
-        void isDisfollowed(int arg);
+        bool following() const;
 
+    signals:
         void imageSourceChanged(QUrl arg);
         void typeChanged(int arg);
         void destinationChanged(QPoint);
         void rotationSpeedChanged(qreal arg);
         void voyageDurationChanged(QPoint arg);
 
+        void ppositionChanged(QPoint arg);
+
+        void followingChanged(bool arg);
+
     private slots:
-        void setVoyageDuration(QPoint arg);
-        void changeProperties(int arg);
-        void rotate();
+        void setVoyageDuration(QPoint arg); //calculate duration of specific distance
+        void changeProperties(int arg); //change properties according to ship type --need to finish
+        void rotate();  //choose type of rotation and rotate
+        void emitDestination(); //becauso of passing Point through signal/slot
 
     public slots:
         void setType(int arg);
         void setDestination(QPoint arg);
         void setImageSource(QUrl arg);
         void setRotationSpeed(qreal arg);
+        void setFollowing(bool arg);
 };
 
 
