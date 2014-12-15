@@ -7,6 +7,7 @@ Ship::Ship(QQuickItem *parent) :
 {
     m_focus = false;
     m_following = false;
+    m_counter = 0;
 
     QObject::connect(this, SIGNAL(xChanged()), this, SLOT(emitDestination()));
     QObject::connect(this, SIGNAL(yChanged()), this, SLOT(emitDestination()));
@@ -112,11 +113,17 @@ void Ship::setDestination(QPoint arg)
 
     m_destination = arg;
 
-    if(m_focus) {
+    if(m_following)
+        m_counter += 1;
+
+    if((m_counter >= 15 && m_following) || m_focus)
+    {
+        m_counter = 0;
         QObject *animation = this->findChild<QObject*>("moveAnimation");
         QMetaObject::invokeMethod(animation, "stop");
+
+        emit destinationChanged(arg);
     }
-    emit destinationChanged(arg);
 }
 
 void Ship::setImageSource(QUrl arg)

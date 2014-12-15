@@ -26,6 +26,8 @@ class Ship : public AbstractItem
         int m_voyageDuration;
         bool m_following;
 
+        int m_counter;
+
     public:
         explicit Ship(QQuickItem *parent = 0);
 
