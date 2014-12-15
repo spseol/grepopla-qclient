@@ -11,8 +11,9 @@ class Game : public QQuickItem
     Q_PROPERTY(int planetCount READ planetCount WRITE setPlanetCount NOTIFY planetCountChanged)
     Q_PROPERTY(int playerCount READ playerCount WRITE setPlayerCount NOTIFY playerCountChanged)
 
-    int m_planetCount;
-    int m_playerCount;
+    private:
+        int m_planetCount;
+        int m_playerCount;
 
     public:
         explicit Game(QQuickItem *parent = 0);
@@ -22,6 +23,7 @@ class Game : public QQuickItem
 
     signals:
         void restart();
+        void start();
         void gameOver(Player *arg);
         void planetCountChanged(int arg);
         void playerCountChanged(int arg);
