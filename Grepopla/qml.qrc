@@ -5,5 +5,6 @@
         <file>qml.qrc</file>
         <file>resources/images/black_arrow.svg</file>
         <file>components/qml/game_components/Ship.qml</file>
+        <file>components/qml/game_components/Game.qml</file>
     </qresource>
 </RCC>
