@@ -108,6 +108,16 @@ QVariantList Ship::targetsID() const
     return m_targetsID;
 }
 
+int Ship::lifes() const
+{
+    return m_lifes;
+}
+
+int Ship::currentLife() const
+{
+    return m_currentLife;
+}
+
 /*---------------------*/
 /*-------SETTERS-------*/
 /*---------------------*/
@@ -183,6 +193,15 @@ void Ship::setUpdateDestination(bool arg)
     m_updateDestination = arg;
 }
 
+void Ship::setCurrentLife(int arg)
+{
+    if (m_currentLife == arg)
+        return;
+
+    m_currentLife = arg;
+    emit currentLifeChanged(arg);
+}
+
 void Ship::setVoyageDuration(QPoint arg)
 {
     qreal distance = sqrt(pow(arg.x() - this->x(), 2) + pow(arg.y() - this->y(), 2));
@@ -199,15 +218,3 @@ void Ship::changeProperties(int arg)
             break;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
