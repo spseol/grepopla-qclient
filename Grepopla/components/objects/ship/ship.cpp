@@ -8,6 +8,7 @@ Ship::Ship(QQuickItem *parent) :
     m_focus = false;
     m_following = false;
     m_counter = 0;
+    m_updateDestination = false;
 
     QObject::connect(this, SIGNAL(xChanged()), this, SLOT(emitDestination()));
     QObject::connect(this, SIGNAL(yChanged()), this, SLOT(emitDestination()));
@@ -39,19 +40,28 @@ void Ship::rotate()
 
 void Ship::emitDestination()
 {
-    emit ppositionChanged(position().toPoint());
+    emit positionChanged(position().toPoint());
 }
 
 void Ship::startEmitDestination(Ship* follower)
 {
     follower->setFollowing(true);
-    QObject::connect(this, SIGNAL(ppositionChanged(QPoint)), follower, SLOT(setDestination(QPoint)));
+    QObject::connect(this, SIGNAL(positionChanged(QPoint)), follower, SLOT(setDestination(QPoint)));
+
+    //add target to follower
+    QVariantList list = follower->targetsID();
+    list.append(this->m_ID);
+    follower->setTargetsID(list);
+    follower->setUpdateDestination(true);
+    follower->setDestination(QPoint(0,0));
+
+    emit positionChanged(position().toPoint());
 }
 
 void Ship::stopEmitDestination(Ship *follower)
 {
     follower->setFollowing(false);
-    QObject::disconnect(this, SIGNAL(ppositionChanged(QPoint)), follower, SLOT(setDestination(QPoint)));
+    QObject::disconnect(this, SIGNAL(positionChanged(QPoint)), follower, SLOT(setDestination(QPoint)));
 }
 
 qreal Ship::rotationDuration() const
@@ -93,6 +103,11 @@ bool Ship::following() const
     return m_following;
 }
 
+QVariantList Ship::targetsID() const
+{
+    return m_targetsID;
+}
+
 /*---------------------*/
 /*-------SETTERS-------*/
 /*---------------------*/
@@ -108,7 +123,7 @@ void Ship::setType(int arg)
 
 void Ship::setDestination(QPoint arg)
 {
-    if (m_destination == arg || (!m_focus && !m_following))
+    if ((m_destination == arg && !m_updateDestination) || (!m_focus && !m_following && !m_updateDestination ))
         return;
 
     m_destination = arg;
@@ -116,9 +131,10 @@ void Ship::setDestination(QPoint arg)
     if(m_following)
         m_counter += 1;
 
-    if((m_counter >= 15 && m_following) || m_focus)
+    if((m_counter >= 15 && m_following) || m_focus || m_updateDestination)
     {
         m_counter = 0;
+        m_updateDestination = false;
         QObject *animation = this->findChild<QObject*>("moveAnimation");
         QMetaObject::invokeMethod(animation, "stop");
 
@@ -151,6 +167,20 @@ void Ship::setFollowing(bool arg)
 
     m_following = arg;
     emit followingChanged(arg);
+}
+
+void Ship::setTargetsID(QVariantList arg)
+{
+    if (m_targetsID == arg)
+        return;
+
+    m_targetsID = arg;
+    emit targetsIDChanged(arg);
+}
+
+void Ship::setUpdateDestination(bool arg)
+{
+    m_updateDestination = arg;
 }
 
 void Ship::setVoyageDuration(QPoint arg)
