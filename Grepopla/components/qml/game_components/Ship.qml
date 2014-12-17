@@ -18,14 +18,37 @@ Ship {
         NumberAnimation { duration: ship.rotationDuration() }
     }
 
+    Text {
+        id: text
+        text:   ship.ID
+        color: "white"
+        anchors.centerIn: parent
+        font.pixelSize: 20
+    }
+
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
-            if(mouse.button == Qt.LeftButton)
+            if(mouse.button == Qt.LeftButton) {
+                text.color = "blue"
                 ship.focus = true
-            else if(mouse.button == Qt.RightButton)
+                //ship.following = false
+                for(var key in ship.targetsID)
+                    player.shipContainer[ship.targetsID[key]].stopEmitDestination(ship)
+
+                ship.targetsID = new Array
+            }
+
+            else if(mouse.button == Qt.RightButton) {
                 ship.focus = false
+                text.color = "red"
+                //ship.following = true
+                //player.shipContainer[O].startEmitDestination(ship)
+                player.shipContainer[0].startEmitDestination(ship)
+                ship.targetsID.push(0)
+
+            }
         }
     }
 }

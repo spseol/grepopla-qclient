@@ -14,12 +14,21 @@ ApplicationWindow {
 
     Components.Player {
         id: player
+
+        Component.onCompleted: {
+            player.shipContainer[1].destination = Qt.point(200, 200)
+        }
     }
 
     MouseArea {
         anchors.fill: parent
+    acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
-            player.shipContainer[0].destination = Qt.point(mouse.x, mouse.y)
+            //if(mouse.button == Qt.RightButton)
+                //player.shipContainer[1].startEmitDestination(player.shipContainer[0])
+            for(var key in player.shipContainer)
+                if(player.shipContainer[key].focus)
+                    player.shipContainer[key].destination = Qt.point(mouse.x, mouse.y)
         }
     }
 }

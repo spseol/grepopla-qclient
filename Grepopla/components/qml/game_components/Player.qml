@@ -9,11 +9,25 @@ Player {
     Component.onCompleted: {
         var component = Qt.createComponent("Ship.qml");
 
-        var object = component.createObject(root)
-        object.width = 50
-        object.height = 50
-        object.speed = 9
-        object.type = Ship.SmallShip
-        player.shipContainer.push(object)
+        player.shipContainer[0] = component.createObject(root)
+
+        player.shipContainer[0].width = 50
+        player.shipContainer[0].height = 50
+        player.shipContainer[0].speed = 0.5
+        player.shipContainer[0].type = Ship.SmallShip
+
+
+        player.shipContainer[1] = component.createObject(root)
+        player.shipContainer[1].x = 100
+        player.shipContainer[1].width = 50
+        player.shipContainer[1].height = 50
+        player.shipContainer[1].speed = 9
+
+        player.shipContainer[2] = component.createObject(root)
+        player.shipContainer[2].x = 450
+        player.shipContainer[2].width = 50
+        player.shipContainer[2].height = 50
+        player.shipContainer[2].speed = 9
+        player.shipContainer[2].type = Ship.SmallShip
     }
 }
