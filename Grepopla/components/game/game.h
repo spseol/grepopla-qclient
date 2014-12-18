@@ -19,7 +19,7 @@ class Game : public QQuickItem
     public:
         explicit Game(QQuickItem *parent = 0);
 
-        static ShipOptions SmallShip;
+        static ShipOptions *SmallShip;
 
         int planetCount() const;
         int playerCount() const;
@@ -27,7 +27,7 @@ class Game : public QQuickItem
     signals:
         void restart();
         void start();
-        void gameOver(Player *arg);
+        void gameOver(int arg);
         void planetCountChanged(int arg);
         void playerCountChanged(int arg);
 

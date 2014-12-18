@@ -1,5 +1,5 @@
 #include "game.h"
-ShipOptions Game::SmallShip = ShipOptions(9, 50, 1);
+ShipOptions *Game::SmallShip = new ShipOptions(9, 50, 1);
 
 Game::Game(QQuickItem *parent) :
     QQuickItem(parent)
