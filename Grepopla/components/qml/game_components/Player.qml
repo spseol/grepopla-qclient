@@ -1,11 +1,13 @@
 import QtQuick 2.0
 import Player 1.0
 import Ship 1.0
+import Planet 1.0
 
 Player {
     id: player
     property var shipContainer: new Array
-    //property list<Planet> planetContainer
+    property var planetContainer: new Array
+
     Component.onCompleted: {
         var component = Qt.createComponent("Ship.qml");
 

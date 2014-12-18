@@ -32,12 +32,10 @@ class Ship : public AbstractItem
         int m_counter;
         bool m_updateDestination;
         QVariantList m_targetsID;
-
         int m_lifes;
-
         int m_currentLife;
 
-public:
+    public:
         explicit Ship(QQuickItem *parent = 0);
 
         enum ShipType { SmallShip, ColonisingShip };
@@ -55,12 +53,10 @@ public:
         int voyageDuration() const;
         bool following() const;
         QVariantList targetsID() const;
-
         int lifes() const;
-
         int currentLife() const;
 
-signals:
+    signals:
         void imageSourceChanged(QUrl arg);
         void typeChanged(int arg);
         void destinationChanged(QPoint arg);
@@ -69,10 +65,9 @@ signals:
         void positionChanged(QPoint arg);
         void followingChanged(bool arg);
         void targetsIDChanged(QVariantList arg);
-
         void currentLifeChanged(int arg);
 
-private slots:
+    private slots:
         void setVoyageDuration(QPoint arg); //calculate duration of specific distance
         void changeProperties(int arg); //change properties according to ship type --need to finish
         void rotate();  //choose type of rotation and rotate
