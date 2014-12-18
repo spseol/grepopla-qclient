@@ -12,7 +12,6 @@ void Ship::setInactive()
         follower->setTargetsID(targets);
     }
 
-
     deleteLater();
 }
 
