@@ -2,8 +2,7 @@
 #include <QtMath>
 #include <QtSvg/QSvgRenderer>
 
-Ship::Ship(QQuickItem *parent) :
-    AbstractItem(parent)
+void Ship::setup()
 {
     m_focus = false;
     m_following = false;
@@ -17,12 +16,24 @@ Ship::Ship(QQuickItem *parent) :
     QObject::connect(this, SIGNAL(typeChanged(int)), this, SLOT(changeProperties(int)));
 }
 
+Ship::Ship(QQuickItem *parent) :
+    AbstractItem(parent)
+{
+    setup();
+    m_properties = Game::SmallShip;
+}
+
+Ship::Ship(ShipOptions *type, QQuickItem *parent) :
+    AbstractItem(parent)
+{
+    setup();
+    m_properties = type;
+}
+
 void Ship::paint(QPainter *painter)
 {
-    //relative do not work
-    QSvgRenderer renderer(m_imageSource.toString());
-
-    renderer.render(painter);
+    QSvgRenderer *renderer = new QSvgRenderer(m_imageSource);
+    renderer->render(painter);
 }
 
 void Ship::rotate()
@@ -83,7 +94,7 @@ QPoint Ship::destination() const
     return m_destination;
 }
 
-QUrl Ship::imageSource() const
+QString Ship::imageSource() const
 {
     return m_imageSource;
 }
@@ -152,7 +163,7 @@ void Ship::setDestination(QPoint arg)
     }
 }
 
-void Ship::setImageSource(QUrl arg)
+void Ship::setImageSource(QString arg)
 {
     if (m_imageSource == arg)
         return;

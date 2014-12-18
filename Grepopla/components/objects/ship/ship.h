@@ -4,6 +4,8 @@
 #include <QQuickPaintedItem>
 #include <QPainter>
 #include "../abstractitem.h"
+#include "../../game/game.h"
+#include "ShipOptions.h"
 
 class Ship : public AbstractItem
 {
@@ -12,7 +14,7 @@ class Ship : public AbstractItem
     Q_ENUMS(ShipType)
     Q_PROPERTY(int type READ type WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QPoint destination READ destination WRITE setDestination NOTIFY destinationChanged)
-    Q_PROPERTY(QUrl imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
+    Q_PROPERTY(QString imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
     Q_PROPERTY(qreal rotationSpeed READ rotationSpeed WRITE setRotationSpeed NOTIFY rotationSpeedChanged)
     Q_PROPERTY(int voyageDuration READ voyageDuration NOTIFY voyageDurationChanged)
     Q_PROPERTY(bool following READ following WRITE setFollowing NOTIFY followingChanged)
@@ -23,7 +25,7 @@ class Ship : public AbstractItem
     private:
         int m_type;
         QPoint m_destination;
-        QUrl m_imageSource;    
+        QString m_imageSource;
         qreal m_rotationSpeed;  //how much miliseconds does it take to rotate by 1°
         qreal delta_rotation;
         int m_voyageDuration;
@@ -35,8 +37,13 @@ class Ship : public AbstractItem
         int m_lifes;
         int m_currentLife;
 
+        ShipOptions *m_properties;
+
+        void setup();
+
     public:
         explicit Ship(QQuickItem *parent = 0);
+        Ship(ShipOptions* type, QQuickItem *parent = 0);
 
         enum ShipType { SmallShip, ColonisingShip };
 
@@ -48,7 +55,7 @@ class Ship : public AbstractItem
 
         int type() const;
         QPoint destination() const;
-        QUrl imageSource() const;
+        QString imageSource() const;
         qreal rotationSpeed() const;
         int voyageDuration() const;
         bool following() const;
@@ -57,7 +64,7 @@ class Ship : public AbstractItem
         int currentLife() const;
 
     signals:
-        void imageSourceChanged(QUrl arg);
+        void imageSourceChanged(QString arg);
         void typeChanged(int arg);
         void destinationChanged(QPoint arg);
         void rotationSpeedChanged(qreal arg);
@@ -76,7 +83,7 @@ class Ship : public AbstractItem
     public slots:
         void setType(int arg);
         void setDestination(QPoint arg);
-        void setImageSource(QUrl arg);
+        void setImageSource(QString arg);
         void setRotationSpeed(qreal arg);
         void setFollowing(bool arg);
         void setTargetsID(QVariantList arg);
