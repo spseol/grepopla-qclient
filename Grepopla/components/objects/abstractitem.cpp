@@ -12,11 +12,6 @@ AbstractItem::AbstractItem(QQuickItem *parent) :
 /*-------GETTERS-------*/
 /*---------------------*/
 
-qreal AbstractItem::speed() const
-{
-    return m_speed;
-}
-
 QStringList AbstractItem::colors() const
 {
     return m_colors;
@@ -36,15 +31,6 @@ qreal AbstractItem::ratio() const
 /*---------------------*/
 /*-------SETTERS-------*/
 /*---------------------*/
-
-void AbstractItem::setSpeed(qreal arg)
-{
-    if (m_speed == arg)
-        return;
-
-    m_speed = arg;
-    emit speedChanged(arg);
-}
 
 void AbstractItem::setColors(QStringList arg)
 {
