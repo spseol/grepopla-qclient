@@ -2,7 +2,6 @@
 #define PLAYER_H
 
 #include <QQuickItem>
-#include "../../objects/ship/ship.h"
 
 class Player : public QQuickItem
 {
