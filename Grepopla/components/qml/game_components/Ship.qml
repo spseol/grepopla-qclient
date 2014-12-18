@@ -50,8 +50,5 @@ Ship {
 
             }
         }
-        onDoubleClicked: {
-            ship.setInactive()
-        }
     }
 }
