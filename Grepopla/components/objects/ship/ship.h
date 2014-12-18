@@ -19,31 +19,29 @@ class Ship : public AbstractItem
     Q_PROPERTY(int voyageDuration READ voyageDuration NOTIFY voyageDurationChanged)
     Q_PROPERTY(bool following READ following WRITE setFollowing NOTIFY followingChanged)
     Q_PROPERTY(QVariantList targetsID READ targetsID WRITE setTargetsID NOTIFY targetsIDChanged)
-    Q_PROPERTY(int lifes READ lifes CONSTANT)
     Q_PROPERTY(int currentLife READ currentLife WRITE setCurrentLife NOTIFY currentLifeChanged)
 
     private:
+        //ship properties
         int m_type;
+        int m_currentLife;
+        ShipOptions *m_properties;
+
+        //calculation properties
         QPoint m_destination;
         QString m_imageSource;
         qreal m_rotationSpeed;  //how much miliseconds does it take to rotate by 1°
         qreal delta_rotation;
         int m_voyageDuration;
+
+        //following properties
         bool m_following;
-
-        int m_counter;
-        bool m_updateDestination;
+        bool m_updateDestination;   //I do not move, but emit my position
         QVariantList m_targetsID;
-        int m_lifes;
-        int m_currentLife;
-
-        ShipOptions *m_properties;
-
-        void setup();
+        QList<Ship*> m_followers;   //not Twitter followers
 
     public:
         explicit Ship(QQuickItem *parent = 0);
-        Ship(ShipOptions* type, QQuickItem *parent = 0);
 
         enum ShipType { SmallShip, ColonisingShip };
 
@@ -60,7 +58,6 @@ class Ship : public AbstractItem
         int voyageDuration() const;
         bool following() const;
         QVariantList targetsID() const;
-        int lifes() const;
         int currentLife() const;
 
     signals:
@@ -76,11 +73,12 @@ class Ship : public AbstractItem
 
     private slots:
         void setVoyageDuration(QPoint arg); //calculate duration of specific distance
-        void changeProperties(int arg); //change properties according to ship type --need to finish
         void rotate();  //choose type of rotation and rotate
-        void emitDestination(); //becauso of passing Point through signal/slot
+        void emitDestination(); //because of passing Point through signal/slot
 
     public slots:
+        void setInactive(); //need to tell everyone to stop follow me
+
         void setType(int arg);
         void setDestination(QPoint arg);
         void setImageSource(QString arg);

@@ -2,32 +2,36 @@
 #include <QtMath>
 #include <QtSvg/QSvgRenderer>
 
-void Ship::setup()
+void Ship::setInactive()
 {
-    m_focus = false;
-    m_following = false;
-    m_counter = 0;
-    m_updateDestination = false;
+    foreach (Ship* follower, m_followers)
+    {
+        //remove me from list of targets
+        QVariantList targets = follower->targetsID();
+        targets.removeOne(m_ID);
+        follower->setTargetsID(targets);
+    }
 
-    QObject::connect(this, SIGNAL(xChanged()), this, SLOT(emitDestination()));
-    QObject::connect(this, SIGNAL(yChanged()), this, SLOT(emitDestination()));
-    QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(setVoyageDuration(QPoint)));
-    QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(rotate()));
-    QObject::connect(this, SIGNAL(typeChanged(int)), this, SLOT(changeProperties(int)));
+
+    deleteLater();
 }
 
 Ship::Ship(QQuickItem *parent) :
     AbstractItem(parent)
 {
-    setup();
+    m_focus = false;
+    m_following = false;
+    m_updateDestination = false;
     m_properties = Game::SmallShip;
-}
 
-Ship::Ship(ShipOptions *type, QQuickItem *parent) :
-    AbstractItem(parent)
-{
-    setup();
-    m_properties = type;
+    //my position changed. Follow me!
+    QObject::connect(this, SIGNAL(xChanged()), this, SLOT(emitDestination()));
+    QObject::connect(this, SIGNAL(yChanged()), this, SLOT(emitDestination()));
+
+    //I have to calculate duration of my voyage
+    QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(setVoyageDuration(QPoint)));
+    //as well as duration of my rotation
+    QObject::connect(this, SIGNAL(destinationChanged(QPoint)), this, SLOT(rotate()));
 }
 
 void Ship::paint(QPainter *painter)
@@ -59,18 +63,24 @@ void Ship::startEmitDestination(Ship* follower)
     follower->setFollowing(true);
     QObject::connect(this, SIGNAL(positionChanged(QPoint)), follower, SLOT(setDestination(QPoint)));
 
+    //add follower somewhere, so I could know, who is following me
+    m_followers.append(follower);
+
     //add target to follower
-    QVariantList list = follower->targetsID();
+    QVariantList list = follower->targetsID();  //add me to the follower as target
     list.append(this->m_ID);
-    follower->setTargetsID(list);
-    follower->setUpdateDestination(true);
-    follower->setDestination(QPoint(0,0));
+
+    follower->setTargetsID(list);   //tell to the follower to follow me although I do not move
+    follower->setUpdateDestination(true);   //and I have to tell him to skip counter and follow me immediately
 
     emit positionChanged(position().toPoint());
 }
 
 void Ship::stopEmitDestination(Ship *follower)
 {
+    //you stoped following me? I remove you from my list
+    m_followers.removeOne(follower);
+
     follower->setFollowing(false);
     QObject::disconnect(this, SIGNAL(positionChanged(QPoint)), follower, SLOT(setDestination(QPoint)));
 }
@@ -119,11 +129,6 @@ QVariantList Ship::targetsID() const
     return m_targetsID;
 }
 
-int Ship::lifes() const
-{
-    return m_lifes;
-}
-
 int Ship::currentLife() const
 {
     return m_currentLife;
@@ -139,6 +144,10 @@ void Ship::setType(int arg)
         return;
 
     m_type = arg;
+
+    if(arg == SmallShip)
+        m_properties = Game::SmallShip;
+
     emit typeChanged(arg);
 }
 
@@ -147,14 +156,15 @@ void Ship::setDestination(QPoint arg)
     if ((m_destination == arg && !m_updateDestination) || (!m_focus && !m_following && !m_updateDestination ))
         return;
 
+    static int counter = 0; //because of speed of animation, just can't handle update every milisecond
     m_destination = arg;
 
     if(m_following)
-        m_counter += 1;
+        counter += 1;
 
-    if((m_counter >= 15 && m_following) || m_focus || m_updateDestination)
+    if((counter >= 15 && m_following) || m_focus || m_updateDestination)
     {
-        m_counter = 0;
+        counter = 0;
         m_updateDestination = false;
         QObject *animation = this->findChild<QObject*>("moveAnimation");
         QMetaObject::invokeMethod(animation, "stop");
@@ -216,16 +226,6 @@ void Ship::setCurrentLife(int arg)
 void Ship::setVoyageDuration(QPoint arg)
 {
     qreal distance = sqrt(pow(arg.x() - this->x(), 2) + pow(arg.y() - this->y(), 2));
-    m_voyageDuration = distance * m_speed;
+    m_voyageDuration = distance * m_properties->speed;
     emit voyageDurationChanged(arg);
-}
-
-void Ship::changeProperties(int arg)
-{
-    switch (arg) {  //dokončit
-        case SmallShip:
-            this->setSpeed(9);
-            this->setRatio(0.2);
-            break;
-    }
 }

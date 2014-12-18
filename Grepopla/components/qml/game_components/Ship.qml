@@ -4,7 +4,7 @@ import Ship 1.0
 Ship {
     id: ship
 
-    imageSource: "C:/Users/Sony/Documents/grepopla-qclient/Grepopla/resources/images/Symbol_Up_Arrow.svg"
+    imageSource: ":/resources/images/Symbol_Up_Arrow.svg"
     rotationSpeed: 5
 
     onDestinationChanged: ParallelAnimation {
@@ -49,6 +49,9 @@ Ship {
                 ship.targetsID.push(0)
 
             }
+        }
+        onDoubleClicked: {
+            ship.setInactive()
         }
     }
 }
