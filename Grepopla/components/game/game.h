@@ -3,6 +3,7 @@
 
 #include <QQuickItem>
 #include "player/player.h"
+#include "../objects/ship/ShipOptions.h"
 
 class Game : public QQuickItem
 {
@@ -17,6 +18,8 @@ class Game : public QQuickItem
 
     public:
         explicit Game(QQuickItem *parent = 0);
+
+        static ShipOptions SmallShip;
 
         int planetCount() const;
         int playerCount() const;

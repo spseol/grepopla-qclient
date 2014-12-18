@@ -22,4 +22,5 @@ HEADERS += \
     components/objects/ship/ship.h \
     components/objects/planet/planet.h \
     components/game/game.h \
-    components/game/player/player.h
+    components/game/player/player.h \
+    components/objects/ship/ShipOptions.h
