@@ -128,9 +128,9 @@ QVariantList Ship::targetsID() const
     return m_targetsID;
 }
 
-int Ship::currentLife() const
+int Ship::currentHP() const
 {
-    return m_currentLife;
+    return m_currentHP;
 }
 
 /*---------------------*/
@@ -213,13 +213,13 @@ void Ship::setUpdateDestination(bool arg)
     m_updateDestination = arg;
 }
 
-void Ship::setCurrentLife(int arg)
+void Ship::setCurrentHP(int arg)
 {
-    if (m_currentLife == arg)
+    if (m_currentHP == arg)
         return;
 
-    m_currentLife = arg;
-    emit currentLifeChanged(arg);
+    m_currentHP = arg;
+    emit currentHPChanged(arg);
 }
 
 void Ship::setVoyageDuration(QPoint arg)

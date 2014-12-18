@@ -5,10 +5,10 @@ struct ShipOptions
 {
     double speed;
     int size;
-    int lifes;
+    int HP;
 
     //constructor
-    ShipOptions(double p_speed, int p_size, int p_lives): speed(p_speed), size(p_size), lifes(p_lives) {}
+    ShipOptions(double p_speed, int p_size, int p_HP): speed(p_speed), size(p_size), HP(p_HP) {}
 };
 
 #endif // SHIPOPTIONS_H

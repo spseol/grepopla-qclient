@@ -19,12 +19,12 @@ class Ship : public AbstractItem
     Q_PROPERTY(int voyageDuration READ voyageDuration NOTIFY voyageDurationChanged)
     Q_PROPERTY(bool following READ following WRITE setFollowing NOTIFY followingChanged)
     Q_PROPERTY(QVariantList targetsID READ targetsID WRITE setTargetsID NOTIFY targetsIDChanged)
-    Q_PROPERTY(int currentLife READ currentLife WRITE setCurrentLife NOTIFY currentLifeChanged)
+    Q_PROPERTY(int currentHP READ currentHP WRITE setCurrentHP NOTIFY currentHPChanged)
 
     private:
         //ship properties
         int m_type;
-        int m_currentLife;
+        int m_currentHP;
         ShipOptions *m_properties;
 
         //calculation properties
@@ -58,7 +58,7 @@ class Ship : public AbstractItem
         int voyageDuration() const;
         bool following() const;
         QVariantList targetsID() const;
-        int currentLife() const;
+        int currentHP() const;
 
     signals:
         void imageSourceChanged(QString arg);
@@ -69,7 +69,7 @@ class Ship : public AbstractItem
         void positionChanged(QPoint arg);
         void followingChanged(bool arg);
         void targetsIDChanged(QVariantList arg);
-        void currentLifeChanged(int arg);
+        void currentHPChanged(int arg);
 
     private slots:
         void setVoyageDuration(QPoint arg); //calculate duration of specific distance
@@ -86,7 +86,7 @@ class Ship : public AbstractItem
         void setFollowing(bool arg);
         void setTargetsID(QVariantList arg);
         void setUpdateDestination(bool arg);
-        void setCurrentLife(int arg);
+        void setCurrentHP(int arg);
 };
 
 
