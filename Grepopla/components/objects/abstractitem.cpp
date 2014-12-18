@@ -68,8 +68,22 @@ void AbstractItem::setFocus(bool arg)
     emit focusChanged(arg);
 }
 
+void AbstractItem::setOwner(Player *arg)
+{
+    if (m_owner == arg)
+        return;
+
+    m_owner = arg;
+    emit ownerChanged(arg);
+}
+
 
 bool AbstractItem::focus() const
 {
     return m_focus;
+}
+
+Player *AbstractItem::owner() const
+{
+    return m_owner;
 }
