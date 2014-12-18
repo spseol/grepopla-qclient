@@ -20,16 +20,9 @@ int Planet::population() const
     return m_population;
 }
 
-void Planet::buildShip(ShipOptions *type)
-{
-
-}
-
-//void Planet::buildShip(ShipOptions *type){}
-
 void Planet::handleCapturing(Player *conquerer)
 {
-
+    m_owner = conquerer;
 }
 
 void Planet::setOwner(Player *arg)

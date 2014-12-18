@@ -29,7 +29,6 @@ class Planet : public AbstractItem
         int population() const;
 
     public slots:
-        void buildShip(ShipOptions *type);
         void handleCapturing(Player* conquerer);
 
         void setOwner(Player* arg);
@@ -37,7 +36,7 @@ class Planet : public AbstractItem
 
     signals:
         void shipFinished(int ID);
-        //void buildShip();
+        void buildShip(ShipOptions* type);
 
         void ownerChanged(Player* arg);
         void populationChanged(int arg);
