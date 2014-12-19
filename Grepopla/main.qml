@@ -13,14 +13,15 @@ ApplicationWindow {
 
     Components.Player {
         id: player
-
-        Component.onCompleted: {
-            player.shipContainer[1].destination = Qt.point(200, 200)
-        }
     }
 
     Components.Game {
+        id: game
 
+        Component.onCompleted: {
+            var component = Qt.createComponent("components/qml/game_components/Player.qml")
+            game.playerContainer.push(component.createObject(root))
+        }
     }
 
     //------------DATA TRANSFER-----------
@@ -28,7 +29,7 @@ ApplicationWindow {
         id: socket
 
         active: true
-        url: "ws://192.168.2.111:8888/ws/control"
+        url: "ws://hroch.spseol.cz:8888"
 
         onStatusChanged: {
             var actualStatus = socket.status
@@ -55,6 +56,32 @@ ApplicationWindow {
                     break;
             }
         }
+
+        onTextMessageReceived: {
+            var command = JSON.parse(message)
+
+            if(command.command == "init") {
+                var component = Qt.createComponent("components/qml/game_components/" + command.entity + ".qml")
+                var object = component.createObject(root);
+                var len = game.playerContainer[command.values.owner_id].objectContainer[command.entity].length;
+
+                object.ID = command.id; //ID
+                object.owner = game.playerContainer[command.values.owner_id];
+                object.x = command.values.x;
+                object.y = command.values.y;
+
+                if(command.entity == "Planet")
+                    ;//object.size = command.values.size;    //not ready
+
+                else if(command.entity == "Ship") {
+                    var types = ["SmallShip", "ColonisingShip"];
+                    object.type = types(command.values.type);
+                }
+
+                game.playerContainer[command.values.owner_id].objectContainer[command.entity].push(object);
+
+            }
+        }
     }
     //------------------------------------
 
@@ -62,11 +89,10 @@ ApplicationWindow {
         anchors.fill: parent
     acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
-            //if(mouse.button == Qt.RightButton)
-                //player.shipContainer[1].startEmitDestination(player.shipContainer[0])
-            for(var key in player.shipContainer)
+          /*  for(var key in player.shipContainer)
                 if(player.shipContainer[key].focus)
-                    player.shipContainer[key].destination = Qt.point(mouse.x, mouse.y)
+                    player.shipContainer[key].destination = Qt.point(mouse.x, mouse.y)*/
+            socket.textMessageReceived('{"values": {"y": 60, "x": 160, "size": 4, "owner_id": 0}, "command": "init", "id": 3, "entity": "Planet"}')
         }
     }
 }

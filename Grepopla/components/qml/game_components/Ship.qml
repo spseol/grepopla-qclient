@@ -30,7 +30,7 @@ Ship {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
-            if(mouse.button == Qt.LeftButton) {
+            /*if(mouse.button == Qt.LeftButton) {
                 text.color = "blue"
                 ship.focus = true
                 //ship.following = false
@@ -48,7 +48,7 @@ Ship {
                 player.shipContainer[0].startEmitDestination(ship)
                 ship.targetsID.push(0)
 
-            }
+            }*/
         }
     }
 }
