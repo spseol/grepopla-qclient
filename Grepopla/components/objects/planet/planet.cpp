@@ -7,6 +7,11 @@ Planet::Planet(QQuickItem *parent) :
 
 void Planet::paint(QPainter *painter)
 {
+    painter->setBrush(QBrush(QColor("blue")));
+    painter->drawEllipse(boundingRect());
+    painter->setBrush(QBrush(QColor("white")));
+    painter->setPen(QPen(QColor("white")));
+    painter->drawText(boundingRect(), "1");
 
 }
 
