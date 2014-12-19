@@ -32,7 +32,7 @@ class Planet : public AbstractItem
 
     signals:
         void shipFinished(int ID);
-        void buildShip(ShipOptions* type);
+        void buildShip(int type);
 
         void populationChanged(int arg);
 };
