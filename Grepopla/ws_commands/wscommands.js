@@ -4,12 +4,12 @@ function initObject(info) {
 
     //common datas
     object.ID = info.id; //ID
+    object.x = info.values.x;
+    object.y = info.values.y;
     object.owner = game.playerContainer[info.values.owner_id];
 
     if(info.entity == "Planet") { //init specific planets properties
         //object.size = info.values.size;    //not ready
-        object.x = info.values.x;
-        object.y = info.values.y;
     }
 
     else if(info.entity == "Ship") { //init specific ships properties
