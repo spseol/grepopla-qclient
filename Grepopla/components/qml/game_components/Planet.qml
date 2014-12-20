@@ -8,7 +8,7 @@ Planet {
     Component.onCompleted: console.log("planet init")
 
     onBuildShip: {
-        var component = Qt.createComponent("Ship.qml")
+        //var component = Qt.createComponent("Ship.qml")
         //var list = player.objectContainer["Ship"];
 
         //player.objectContainer["Ship"].push(component.createObject(root));
