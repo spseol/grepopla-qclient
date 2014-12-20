@@ -60,6 +60,7 @@ ApplicationWindow {
         onTextMessageReceived: {
             var command = JSON.parse(message)
 
+            //---------------INIT---------------
             if(command.command == "init") {
                 var component = Qt.createComponent("components/qml/game_components/" + command.entity + ".qml")
                 var object = component.createObject(root);
@@ -70,17 +71,32 @@ ApplicationWindow {
                 object.x = command.values.x;
                 object.y = command.values.y;
 
-                if(command.entity == "Planet")
+                if(command.entity == "Planet")  //init specific planets properties
                     ;//object.size = command.values.size;    //not ready
 
-                else if(command.entity == "Ship") {
+                else if(command.entity == "Ship") { //init specific ships properties
                     var types = ["SmallShip", "ColonisingShip"];
                     object.type = types(command.values.type);
                 }
 
                 game.playerContainer[command.values.owner_id].objectContainer[command.entity].push(object);
-
             }
+            //---------------INIT---------------
+
+            //---------------CAPTURE---------------
+            else if(command.command == "action") {
+                if(command.values.action == "capture") {    //capturing planet
+                    for(var key in game.playerContainer[command.values.previous_owner_id].objectContainer[command.entity])  //find target planet in previous planet list
+                        if(game.playerContainer[command.values.previous_owner_id].objectContainer[command.entity][key].ID == command.id) {
+                            var targetPlanet = game.playerContainer[command.values.previous_owner_id].objectContainer[command.entity][key]; //match found
+                            game.playerContainer[command.values.previous_owner_id].objectContainer[command.entity].splice(key, 1);  //remove from list of previous owner
+                            break;
+                        }
+
+                    game.playerContainer[command.values.capturer_id].objectContainer[command.entity].push(targetPlanet);    //add planet to the new owner
+                }
+            }
+            //---------------CAPTURE---------------
         }
     }
     //------------------------------------
