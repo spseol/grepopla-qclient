@@ -30,25 +30,27 @@ Ship {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
-            /*if(mouse.button == Qt.LeftButton) {
-                text.color = "blue"
-                ship.focus = true
-                //ship.following = false
-                for(var key in ship.targetsID)
-                    player.shipContainer[ship.targetsID[key]].stopEmitDestination(ship)
+            var shipContainer = game.playerContainer[owner.ID].objectContainer["Ship"];
 
-                ship.targetsID = new Array
+            if(game.myID == owner.ID) {
+                for(var key in shipContainer)
+                    game.playerContainer[owner.ID].objectContainer["Ship"][key].focus = false
+
+                ship.focus = true
             }
 
-            else if(mouse.button == Qt.RightButton) {
-                ship.focus = false
-                text.color = "red"
-                //ship.following = true
-                //player.shipContainer[O].startEmitDestination(ship)
-                player.shipContainer[0].startEmitDestination(ship)
-                ship.targetsID.push(0)
+            else {
+                //which my ship has focus?
+                var focusedShip = -1;
 
-            }*/
+                for(var key in shipContainer)
+                    if(shipContainer[key].focus) {
+                        focusedShip = key;
+                        break;
+                    }
+                if( focusedShip != -1)  //check if I have focus on any my ship
+                    ship.startEmitDestination(game.playerContainer[game.myID].objectContainer["Ship"][focusedShip])
+            }
         }
     }
 }
