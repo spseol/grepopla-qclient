@@ -80,10 +80,11 @@ ApplicationWindow {
     acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: {
             console.log("click")
-            if(mouse.button == Qt.RightButton)
                 socket.textMessageReceived('{"command":"init","id": 1, "entity": "Player"}')
-            else
-            socket.textMessageReceived('{"values": {"y": 60, "x": 160, "size": 4, "owner_id": 1}, "command": "init", "id": 3, "entity": "Planet"}')
+                socket.textMessageReceived('{"values": {"y": 60, "x": 160, "size": 4, "owner_id": 1}, "command": "init", "id": 3, "entity": "Planet"}')
+                socket.textMessageReceived('{"command":"init","id": 1, "entity": "Player"}')
+                socket.textMessageReceived('{"values": {"y": 60, "x": 160, "size": 4, "owner_id": 1}, "command": "init", "id": 3, "entity": "Planet"}')
+
         }
     }
 }
