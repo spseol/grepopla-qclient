@@ -20,6 +20,11 @@ int Game::playerCount() const
     return m_playerCount;
 }
 
+int Game::myID() const
+{
+    return m_myID;
+}
+
 /*---------------------*/
 /*-------SETTERS-------*/
 /*---------------------*/
@@ -40,4 +45,13 @@ void Game::setPlayerCount(int arg)
 
     m_playerCount = arg;
     emit playerCountChanged(arg);
+}
+
+void Game::setMyID(int arg)
+{
+    if (m_myID == arg)
+        return;
+
+    m_myID = arg;
+    emit myIDChanged(arg);
 }
