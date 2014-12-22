@@ -60,16 +60,16 @@ ApplicationWindow {
             //---------------INIT---------------
             if(command.command == "init") {
                 if(command.entity == "Player")
-                    WSCommands.initPlayer(command)
+                    WSCommands.initPlayer(command.id, command.entity)
                 else
-                    WSCommands.initObject(command)
+                    WSCommands.initObject(command.id, command.entity, command.values.owner_id, command.values.x, command.values.y, command.values.size)
             }
             //---------------INIT---------------
 
             //---------------CAPTURE---------------
             else if(command.command == "action")
                 if(command.values.action == "capture")  //capturing planet
-                    WSCommands.capturePlanet(command)
+                    WSCommands.capturePlanet(command.id, command.entity, command.values.capturer_id, command.values.previous_owner_id)
             //---------------CAPTURE---------------
         }
     }
