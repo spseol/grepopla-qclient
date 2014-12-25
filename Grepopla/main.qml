@@ -60,31 +60,25 @@ ApplicationWindow {
             //---------------INIT---------------
             if(command.command == "init") {
                 if(command.entity == "Player")
-                    WSCommands.initPlayer(command.id, command.entity)
+                    WSCommands.initPlayer(command.id, command.entity, command.enemy_id)
                 else
-                    WSCommands.initObject(command.id, command.entity, command.values.owner_id, command.values.x, command.values.y, command.values.size)
+                    WSCommands.initObject(command.id, command.entity, command.owner_id, command.values.x, command.values.y, command.values.size)
             }
             //---------------INIT---------------
 
-            //---------------CAPTURE---------------
-            else if(command.command == "action")
-                if(command.values.action == "capture")  //capturing planet
+            //---------------ACTION---------------
+            else if(command.command == "action") {
+                if(command.action == "capture")  //capturing planet
                     WSCommands.capturePlanet(command.id, command.entity, command.values.capturer_id, command.values.previous_owner_id)
-            //---------------CAPTURE---------------
+
+                else if(command.action == "follow")
+                    WSCommands.followShip(command.id, command.owner_id, command.values.following_ship_id, command.values.follower_id)
+            }
+            //---------------ACTION----------------
+
         }
     }
     //------------------------------------
 
-    MouseArea {
-        anchors.fill: parent
-    acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: {
-            console.log("click")
-                socket.textMessageReceived('{"command":"init","id": 1, "entity": "Player"}')
-                socket.textMessageReceived('{"values": {"y": 60, "x": 160, "size": 4, "owner_id": 1}, "command": "init", "id": 3, "entity": "Planet"}')
-                socket.textMessageReceived('{"command":"init","id": 1, "entity": "Player"}')
-                socket.textMessageReceived('{"values": {"y": 60, "x": 160, "size": 4, "owner_id": 1}, "command": "init", "id": 3, "entity": "Planet"}')
 
-        }
-    }
 }
