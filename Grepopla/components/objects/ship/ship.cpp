@@ -160,9 +160,10 @@ void Ship::setDestination(QPoint arg)
 
     if(m_following)
         counter += 1;
-
+qDebug() << counter;
     if((counter >= 15 && m_following) || m_focus || m_updateDestination)
     {
+        qDebug() << "----------------";
         counter = 0;
         m_updateDestination = false;
         QObject *animation = this->findChild<QObject*>("moveAnimation");

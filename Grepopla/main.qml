@@ -39,6 +39,38 @@ ApplicationWindow {
         }
     }
 
+
+    MouseArea {
+        id: mainMouseArea
+
+        enabled: false
+        anchors.fill: parent
+
+        onClicked: {
+            var container = game.playerContainer[game.myID].objectContainer["Ship"]
+
+            for(var key in container) {
+                if(container[key].focus) {
+                    var ship = game.playerContainer[game.myID].objectContainer["Ship"][key];
+                    var datas = {};
+
+                    datas.id = ship.ID;
+                    datas.command = "move";
+                    datas.owner_id = ship.owner.ID
+
+                    datas.values = {};
+                    datas.values.x = mouse.x;
+                    datas.values.y = mouse.y;
+
+                    socket.sendTextMessage(JSON.stringify(datas));
+                    console.log(datas.id)
+                    console.log(JSON.stringify(datas))
+                    break
+                }
+            }
+        }
+    }
+
     //------------DATA TRANSFER-----------
     WebSocket {
         id: socket
@@ -85,13 +117,16 @@ ApplicationWindow {
             //---------------INIT---------------
 
             //---------------ACTION---------------
-            else if(command.command == "action") {
-                if(command.action == "capture")  //capturing planet
+            //else if(command.command == "action") {
+                if(command.command == "capture")  //capturing planet
                     WSCommands.capturePlanet(command.id, command.entity, command.values.capturer_id, command.values.previous_owner_id)
 
-                else if(command.action == "follow")
+                else if(command.command == "follow")
                     WSCommands.followShip(command.id, command.owner_id, command.values.following_ship_id, command.values.follower_id)
-            }
+
+                else if(command.command == "move")
+                    WSCommands.move(command.id, command.owner_id, command.values.x, command.values.y)
+            //}
             //---------------ACTION----------------
 
         }

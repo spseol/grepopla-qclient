@@ -37,19 +37,35 @@ Ship {
                     game.playerContainer[owner.ID].objectContainer["Ship"][key].focus = false
 
                 ship.focus = true
+                console.log("focus")
             }
 
             else {
                 //which my ship has focus?
                 var focusedShip = -1;
 
-                for(var key in shipContainer)
+                for(var key in shipContainer = game.playerContainer[game.myID].objectContainer["Ship"])
                     if(shipContainer[key].focus) {
                         focusedShip = key;
                         break;
                     }
-                if( focusedShip != -1)  //check if I have focus on any my ship
-                    ship.startEmitDestination(game.playerContainer[game.myID].objectContainer["Ship"][focusedShip])
+
+                if( focusedShip != -1) {   //check if I have focus on any my ship
+                    var datas = {};
+
+                    datas.id = ship.ID;
+                    //datas.command = "action";
+                    datas.command = "follow";
+                    datas.owner_id = ship.owner.ID
+
+                    datas.values = {};
+                    datas.values.follower_id = game.myID;
+                    datas.values.following_ship_id = focusedShip;
+
+                    socket.sendTextMessage(JSON.stringify(datas));
+                    //ship.startEmitDestination(game.playerContainer[game.myID].objectContainer["Ship"][focusedShip])
+                }
+
             }
         }
     }
