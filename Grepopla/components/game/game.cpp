@@ -25,6 +25,11 @@ int Game::myID() const
     return m_myID;
 }
 
+QString Game::myNick() const
+{
+    return m_myNick;
+}
+
 /*---------------------*/
 /*-------SETTERS-------*/
 /*---------------------*/
@@ -54,4 +59,13 @@ void Game::setMyID(int arg)
 
     m_myID = arg;
     emit myIDChanged(arg);
+}
+
+void Game::setMyNick(QString arg)
+{
+    if (m_myNick == arg)
+        return;
+
+    m_myNick = arg;
+    emit myNickChanged(arg);
 }

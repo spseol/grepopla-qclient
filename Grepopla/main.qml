@@ -12,6 +12,24 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
+    TextField {
+        id: input
+        width: 100
+        height: 30
+        onAccepted: {
+            var text = input.text
+
+            mainMouseArea.enabled = true
+            input.visible = false
+            game.myNick = text
+            console.log(text)
+
+            var datas = {}
+            datas.nick = text
+            socket.sendTextMessage(JSON.stringify(datas))
+        }
+    }
+
     Components.Game {
         id: game
 
@@ -60,7 +78,7 @@ ApplicationWindow {
             //---------------INIT---------------
             if(command.command == "init") {
                 if(command.entity == "Player")
-                    WSCommands.initPlayer(command.id, command.entity, command.enemy_id)
+                    WSCommands.initPlayer(command.id, command.entity, command.nick)
                 else
                     WSCommands.initObject(command.id, command.entity, command.owner_id, command.values.x, command.values.y, command.values.size)
             }

@@ -29,6 +29,11 @@ int Player::maxPopulation() const
     return m_maxPopulation;
 }
 
+QString Player::nick() const
+{
+    return m_nick;
+}
+
 /*---------------------*/
 /*-------SETTERS-------*/
 /*---------------------*/
@@ -67,4 +72,13 @@ void Player::setMaxPopulation(int arg)
 
     m_maxPopulation = arg;
     emit maxPopulationChanged(arg);
+}
+
+void Player::setNick(QString arg)
+{
+    if (m_nick == arg)
+        return;
+
+    m_nick = arg;
+    emit nickChanged(arg);
 }
