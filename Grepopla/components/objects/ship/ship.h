@@ -94,6 +94,7 @@ class Ship : public AbstractItem
         void setUpdateDestination(bool arg);
         void setCurrentHP(int arg);
         void setTarget(Ship* target);
+        void unfollow();
 };
 
 

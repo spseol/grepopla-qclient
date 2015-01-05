@@ -50,6 +50,10 @@ function followShip(id, owner_id, following_ship_id, follower_id) {
     game.playerContainer[owner_id].objectContainer["Ship"][id].startEmitDestination(game.playerContainer[follower_id].objectContainer["Ship"][following_ship_id]);
 }
 
+function unfollowShip(id, owner_id) {
+    game.playerContainer[owner_id].objectContainer["Ship"][id].unfollow();
+}
+
 function move(id, owner_id, x, y) {
     game.playerContainer[owner_id].objectContainer["Ship"][id].focus = true
     game.playerContainer[owner_id].objectContainer["Ship"][id].updateDestination = true;

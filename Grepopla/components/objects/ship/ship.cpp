@@ -88,7 +88,7 @@ void Ship::stopEmitDestination(Ship *follower)
 
 void Ship::checkCollision()
 {
-    if(!m_target)
+    if(!m_following)
         return;
 
     if(x() >= m_target->x() && x() <= m_target->x() + m_target->width() && y() >= m_target->y() && y() <= m_target->y() + m_target->height()) {
@@ -247,6 +247,11 @@ void Ship::setCurrentHP(int arg)
 void Ship::setTarget(Ship *target)
 {
     m_target = target;
+}
+
+void Ship::unfollow()
+{
+    m_target->stopEmitDestination(this);
 }
 
 void Ship::setVoyageDuration(QPoint arg)

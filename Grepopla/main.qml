@@ -57,6 +57,16 @@ ApplicationWindow {
                     datas.values.y = mouse.y;
 
                     socket.sendTextMessage(JSON.stringify(datas));
+
+                    if(container[key].following) {
+                        datas = {};
+
+                        datas.id = ship.ID;
+                        datas.command = "unfollow";
+                        datas.owner_id = ship.owner.ID
+
+                        socket.sendTextMessage(JSON.stringify(datas));
+                    }
                     break
                 }
             }
@@ -115,6 +125,9 @@ ApplicationWindow {
 
                 else if(command.command == "follow")
                     WSCommands.followShip(command.id, command.owner_id, command.values.following_ship_id, command.values.follower_id)
+
+                else if(command.command == "unfollow")
+                    WSCommands.unfollowShip(command.id, command.owner_id)
 
                 else if(command.command == "move")
                     WSCommands.move(command.id, command.owner_id, command.values.x, command.values.y)
