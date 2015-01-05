@@ -32,6 +32,12 @@ Ship {
     }
 
     Text {
+        text: game.myNick
+        color: "black"
+        font.pixelSize: 10
+    }
+
+    Text {
         id: text
         text:   ship.ID
         color: "white"
