@@ -32,13 +32,7 @@ ApplicationWindow {
 
     Components.Game {
         id: game
-
-        Component.onCompleted: {
-            //var component = Qt.createComponent("components/qml/game_components/Player.qml")
-            //game.playerContainer.push(component.createObject(root))
-        }
     }
-
 
     MouseArea {
         id: mainMouseArea
@@ -63,8 +57,6 @@ ApplicationWindow {
                     datas.values.y = mouse.y;
 
                     socket.sendTextMessage(JSON.stringify(datas));
-                    console.log(datas.id)
-                    console.log(JSON.stringify(datas))
                     break
                 }
             }

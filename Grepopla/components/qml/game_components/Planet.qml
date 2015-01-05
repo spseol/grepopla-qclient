@@ -5,7 +5,7 @@ Planet {
     width: 100
     height: 100
 
-    Component.onCompleted: console.log("planet init")
+    //Component.onCompleted: console.log("planet init")
 
     onBuildShip: {
         //var component = Qt.createComponent("Ship.qml");

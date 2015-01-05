@@ -16,9 +16,13 @@ function initObject(id, entity, owner_id, x, y, size) {
     else if(entity == "Ship") { //init specific ships properties
         var types = ["SmallShip", "ColonisingShip"];
         object.type = size-1;
-        console.log(x +"/"+y)
+        //console.log(x +"/"+y)
         object.width = 50;
         object.height = 50;
+
+        //test code
+        //if(owner_id == game.myID)
+          //  console.log(id)
     }
 
     game.playerContainer[owner_id].objectContainer[entity][id] = object;
