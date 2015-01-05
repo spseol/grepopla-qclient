@@ -18,7 +18,7 @@ class Ship : public AbstractItem
     Q_PROPERTY(qreal rotationSpeed READ rotationSpeed WRITE setRotationSpeed NOTIFY rotationSpeedChanged)
     Q_PROPERTY(int voyageDuration READ voyageDuration NOTIFY voyageDurationChanged)
     Q_PROPERTY(bool following READ following WRITE setFollowing NOTIFY followingChanged)
-    Q_PROPERTY(QVariantList targetsID READ targetsID WRITE setTargetsID NOTIFY targetsIDChanged)
+    //Q_PROPERTY(Ship* targetsID READ targetsID WRITE setTargetsID NOTIFY targetsIDChanged)
     Q_PROPERTY(int currentHP READ currentHP WRITE setCurrentHP NOTIFY currentHPChanged)
     Q_PROPERTY(bool updateDestination READ updateDestination WRITE setUpdateDestination NOTIFY updateDestinationChanged)
 
@@ -38,7 +38,8 @@ class Ship : public AbstractItem
         //following properties
         bool m_following;
         bool m_updateDestination;   //I do not move, but emit my position
-        QVariantList m_targetsID;
+        //QVariantList m_targetsID;
+        Ship* m_target;
         QList<Ship*> m_followers;   //not Twitter followers
 
     public:
@@ -51,6 +52,7 @@ class Ship : public AbstractItem
         Q_INVOKABLE qreal rotationDuration() const; //calculate duration of specific angle
         Q_INVOKABLE void startEmitDestination(Ship* follower);  //follow
         Q_INVOKABLE void stopEmitDestination(Ship* follower);   //stop follow
+        Q_INVOKABLE void checkCollision();
 
         int type() const;
         QPoint destination() const;
@@ -58,7 +60,7 @@ class Ship : public AbstractItem
         qreal rotationSpeed() const;
         int voyageDuration() const;
         bool following() const;
-        QVariantList targetsID() const;
+        //QVariantList targetsID() const;
         int currentHP() const;      
         bool updateDestination() const;
 
@@ -70,9 +72,10 @@ class Ship : public AbstractItem
         void voyageDurationChanged(QPoint arg);
         void positionChanged(QPoint arg);
         void followingChanged(bool arg);
-        void targetsIDChanged(QVariantList arg);
+        //void targetsIDChanged(QVariantList arg);
         void currentHPChanged(int arg);     
         void updateDestinationChanged(bool arg);
+        void boom();
 
     private slots:
         void setVoyageDuration(QPoint arg); //calculate duration of specific distance
@@ -87,9 +90,10 @@ class Ship : public AbstractItem
         void setImageSource(QString arg);
         void setRotationSpeed(qreal arg);
         void setFollowing(bool arg);
-        void setTargetsID(QVariantList arg);
+        //void setTargetsID(QVariantList arg);
         void setUpdateDestination(bool arg);
         void setCurrentHP(int arg);
+        void setTarget(Ship* target);
 };
 
 

@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import Ship 1.0
 
+import "../effects"
+
 Ship {
     id: ship
 
@@ -14,8 +16,19 @@ Ship {
         NumberAnimation { target: ship; property: "y"; to: destination.y; duration: ship.voyageDuration }
     }
 
+    onXChanged: ship.checkCollision()
+    onYChanged: ship.checkCollision()
+    onBoom: boom.boom()
+
     Behavior on rotation {
         NumberAnimation { duration: ship.rotationDuration() }
+    }
+
+    BoomAnimation {
+        id: boom
+        width: ship.width * 3
+        height: width
+        anchors.centerIn: ship
     }
 
     Text {
@@ -37,7 +50,7 @@ Ship {
                     game.playerContainer[owner.ID].objectContainer["Ship"][key].focus = false
 
                 ship.focus = true
-                console.log("focus")
+                //console.log("focus")
             }
 
             else {

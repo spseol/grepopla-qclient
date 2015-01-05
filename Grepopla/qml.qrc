@@ -8,5 +8,6 @@
         <file>resources/images/Symbol_Up_Arrow.svg</file>
         <file>components/qml/game_components/Planet.qml</file>
         <file>ws_commands/wscommands.js</file>
+        <file>components/qml/effects/BoomAnimation.qml</file>
     </qresource>
 </RCC>
