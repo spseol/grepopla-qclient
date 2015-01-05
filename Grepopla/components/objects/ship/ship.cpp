@@ -133,6 +133,11 @@ int Ship::currentHP() const
     return m_currentHP;
 }
 
+bool Ship::updateDestination() const
+{
+    return m_updateDestination;
+}
+
 /*---------------------*/
 /*-------SETTERS-------*/
 /*---------------------*/
@@ -160,8 +165,8 @@ void Ship::setDestination(QPoint arg)
 
     if(m_following)
         counter += 1;
-qDebug() << counter;
-    if((counter >= 15 && m_following) || m_focus || m_updateDestination)
+
+    if((counter >= 15 && m_following) || (m_focus && !m_following) || m_updateDestination)
     {
         qDebug() << "----------------";
         counter = 0;
@@ -211,7 +216,11 @@ void Ship::setTargetsID(QVariantList arg)
 
 void Ship::setUpdateDestination(bool arg)
 {
+    if(m_updateDestination == arg)
+        return;
+
     m_updateDestination = arg;
+    emit updateDestinationChanged(arg);
 }
 
 void Ship::setCurrentHP(int arg)

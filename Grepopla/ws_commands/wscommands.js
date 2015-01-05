@@ -48,5 +48,6 @@ function followShip(id, owner_id, following_ship_id, follower_id) {
 
 function move(id, owner_id, x, y) {
     game.playerContainer[owner_id].objectContainer["Ship"][id].focus = true
+    game.playerContainer[owner_id].objectContainer["Ship"][id].updateDestination = true;
     game.playerContainer[owner_id].objectContainer["Ship"][id].destination = Qt.point(x, y);
 }
