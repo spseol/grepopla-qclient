@@ -6,7 +6,7 @@ void Ship::setInactive()
 {
     foreach (Ship* follower, m_followers)
     {
-        follower->setTarget(0);
+        //follower->setTarget(0);
         //remove me from list of targets
         //QVariantList targets = follower->targetsID();
         //targets.removeOne(m_ID);
@@ -20,7 +20,8 @@ Ship::Ship(QQuickItem *parent) :
     AbstractItem(parent)
 {
     m_focus = false;
-    m_target = 0;
+    m_target = NULL;
+    m_owner = NULL;
     m_following = false;
     m_updateDestination = false;
     m_properties = Game::SmallShip;
