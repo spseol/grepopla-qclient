@@ -7,6 +7,7 @@ Ship {
     id: ship
 
     imageSource: ":/resources/images/Symbol_Up_Arrow.svg"
+    imageSource: ":/resources/images/battleship1.svg"
     rotationSpeed: 5
 
     onDestinationChanged: ParallelAnimation {
