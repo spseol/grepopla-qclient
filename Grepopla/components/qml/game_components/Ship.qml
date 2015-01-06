@@ -25,6 +25,20 @@ Ship {
         NumberAnimation { duration: ship.rotationDuration() }
     }
 
+    Rectangle {
+        width:  parent.width
+        height: width
+        radius: width
+
+        color: "transparent"
+        visible: ship.focus
+
+        border.width: 3
+        border.color: "orange"
+
+        anchors.centerIn: parent
+    }
+
     BoomAnimation {
         id: boom
         width: ship.width * 3
