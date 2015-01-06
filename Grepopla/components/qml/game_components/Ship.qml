@@ -6,10 +6,9 @@ import "../effects"
 Ship {
     id: ship
 
-    imageSource: ":/resources/images/Symbol_Up_Arrow.svg"
     imageSource: ":/resources/images/battleship1.svg"
     rotationSpeed: 5
-
+Component.onCompleted: console.log("ship init")
     onDestinationChanged: ParallelAnimation {
         objectName: "moveAnimation"
 
@@ -20,6 +19,7 @@ Ship {
     onXChanged: ship.checkCollision()
     onYChanged: ship.checkCollision()
     onBoom: boom.boom()
+    onFocusChanged: console.log(ship.ID + "/" + ship.focus)
 
     Behavior on rotation {
         NumberAnimation { duration: ship.rotationDuration() }
@@ -47,18 +47,18 @@ Ship {
     }
 
     Text {
-        text: game.myNick
-        color: "black"
-        font.pixelSize: 10
+        text: ship.owner.nick
+        color: "red"
+        font.pixelSize: 15
     }
 
-    Text {
+    /*Text {
         id: text
         text:   ship.ID
         color: "white"
         anchors.centerIn: parent
         font.pixelSize: 20
-    }
+    }*/
 
     MouseArea {
         anchors.fill: parent

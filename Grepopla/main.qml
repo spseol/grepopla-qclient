@@ -11,6 +11,7 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Hello World")
+    color: "lightGray"
 
     TextField {
         id: input

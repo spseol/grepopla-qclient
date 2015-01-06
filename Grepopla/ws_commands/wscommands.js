@@ -35,6 +35,7 @@ function initPlayer(id, entity, nick) {
     var object = component.createObject(root);
 
     object.ID = id
+    object.nick = nick
 
     game.playerContainer[id] = object;
 }
@@ -55,7 +56,7 @@ function unfollowShip(id, owner_id) {
 }
 
 function move(id, owner_id, x, y) {
-    game.playerContainer[owner_id].objectContainer["Ship"][id].focus = true
+    //game.playerContainer[owner_id].objectContainer["Ship"][id].focus = true
     game.playerContainer[owner_id].objectContainer["Ship"][id].updateDestination = true;
     game.playerContainer[owner_id].objectContainer["Ship"][id].destination = Qt.point(x, y);
 }

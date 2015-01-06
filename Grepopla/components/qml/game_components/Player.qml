@@ -11,7 +11,7 @@ Player {
         objectContainer["Ship"] = new Array
         objectContainer["Planet"] = new Array
 
-        //console.log("player init")
+        console.log("player init")
 
     }
 }
