@@ -6,7 +6,7 @@ import "../effects"
 Ship {
     id: ship
 
-    imageSource: ":/resources/images/battleship1.svg"
+    imageSource: ":/resources/images/modifiedShip.svg"
     rotationSpeed: 5
 Component.onCompleted: console.log("ship init")
     onDestinationChanged: ParallelAnimation {

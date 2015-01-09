@@ -6,8 +6,9 @@ void Ship::setInactive()
 {
     foreach (Ship* follower, m_followers)
     {
-        follower->setTarget(NULL);
-        follower->setOwner(NULL);
+        follower->setFollowing(false);
+        //follower->setTarget(NULL);
+        //follower->setOwner(NULL);
 
         //follower->setTarget(0);
         //remove me from list of targets
@@ -16,9 +17,9 @@ void Ship::setInactive()
         //ollower->setTargetsID(targets);
     }
 
-    m_target = NULL;
-    m_owner = NULL;
-    deleteLater();
+   // m_target = NULL;
+   // m_owner = NULL;
+ //   deleteLater();
 }
 
 Ship::Ship(QQuickItem *parent) :

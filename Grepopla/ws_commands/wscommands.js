@@ -17,8 +17,8 @@ function initObject(id, entity, owner_id, x, y, size) {
         var types = ["SmallShip", "ColonisingShip"];
         object.type = size-1;
         //console.log(x +"/"+y)
-        object.width = 50 * 2;
-        object.height = 50 * 2;
+        object.width = 75;
+        object.height = 75;
 
         //test code
         //if(owner_id == game.myID)

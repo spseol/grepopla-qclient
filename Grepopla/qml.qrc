@@ -10,5 +10,6 @@
         <file>ws_commands/wscommands.js</file>
         <file>components/qml/effects/BoomAnimation.qml</file>
         <file>resources/images/battleship1.svg</file>
+        <file>resources/images/modifiedShip.svg</file>
     </qresource>
 </RCC>
