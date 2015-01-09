@@ -17,8 +17,8 @@ function initObject(id, entity, owner_id, x, y, size) {
         var types = ["SmallShip", "ColonisingShip"];
         object.type = size-1;
         //console.log(x +"/"+y)
-        object.width = 50;
-        object.height = 50;
+        object.width = 50 * 2;
+        object.height = 50 * 2;
 
         //test code
         //if(owner_id == game.myID)
@@ -26,6 +26,14 @@ function initObject(id, entity, owner_id, x, y, size) {
     }
 
     game.playerContainer[owner_id].objectContainer[entity][id] = object;
+}
+
+function requestInit() {
+    var datas = {}
+    datas.command = "request"
+    datas.entity = "Ship"
+
+    socket.sendTextMessage(JSON.stringify(datas))
 }
 
 function initPlayer(id, entity, nick) {

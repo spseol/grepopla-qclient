@@ -6,6 +6,9 @@ void Ship::setInactive()
 {
     foreach (Ship* follower, m_followers)
     {
+        follower->setTarget(NULL);
+        follower->setOwner(NULL);
+
         //follower->setTarget(0);
         //remove me from list of targets
         //QVariantList targets = follower->targetsID();
@@ -13,6 +16,8 @@ void Ship::setInactive()
         //ollower->setTargetsID(targets);
     }
 
+    m_target = NULL;
+    m_owner = NULL;
     deleteLater();
 }
 
@@ -26,6 +31,8 @@ Ship::Ship(QQuickItem *parent) :
     m_updateDestination = false;
     m_properties = Game::SmallShip;
 
+
+    QObject::connect(this, SIGNAL(boom()), this, SLOT(setInactive()));
     //my position changed. Follow me!
     QObject::connect(this, SIGNAL(xChanged()), this, SLOT(emitDestination()));
     QObject::connect(this, SIGNAL(yChanged()), this, SLOT(emitDestination()));

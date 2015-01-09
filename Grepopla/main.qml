@@ -11,7 +11,7 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Hello World")
-    color: "lightGray"
+    color: "#161d2a"
 
     TextField {
         id: input
@@ -39,6 +39,11 @@ ApplicationWindow {
         id: mainMouseArea
 
         enabled: false
+        onEnabledChanged: {
+            if(enabled)
+                console.log("enabled")
+        }
+
         anchors.fill: parent
 
         onClicked: {
@@ -135,6 +140,14 @@ ApplicationWindow {
             //}
             //---------------ACTION----------------
 
+        }
+
+        Item {
+            focus: true
+            Keys.onPressed: {
+                if(event.key == Qt.Key_Space)
+                    WSCommands.requestInit()
+            }
         }
     }
     //------------------------------------
