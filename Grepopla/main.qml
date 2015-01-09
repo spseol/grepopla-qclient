@@ -13,6 +13,14 @@ ApplicationWindow {
     title: qsTr("Hello World")
     color: "#161d2a"
 
+    Item {
+        focus: true
+        Keys.onPressed: {
+            if(event.key == Qt.Key_Space)
+                WSCommands.requestInit()
+        }
+    }
+
     TextField {
         id: input
         width: 100
@@ -140,14 +148,6 @@ ApplicationWindow {
             //}
             //---------------ACTION----------------
 
-        }
-
-        Item {
-            focus: true
-            Keys.onPressed: {
-                if(event.key == Qt.Key_Space)
-                    WSCommands.requestInit()
-            }
         }
     }
     //------------------------------------
